@@ -1,22 +1,28 @@
 const container = document.getElementById('books-container');
-
 const urlParams = new URLSearchParams(window.location.search);
-console.log(urlParams.get('year'));
-
-
 const yearEl = urlParams.get('year');
 const monthEl = urlParams.get('month');
-const dateEl = urlParams.get('date');
+let dateEl = urlParams.get('date');
+if(dateEl.toString().length < 2) {
+  dateEl = "0" + dateEl;
+  console.log(dateEl);
+}
 const genreEl = urlParams.get('genre');
 const formatEl = urlParams.get('format');
-
 const BASE_URL = `https://api.nytimes.com/svc/books/v3/lists/`;
 const key = `?api-key=${API_KEY}`;
 
 function fetchNytData() {
 
   fetch(`${BASE_URL}${yearEl}-${monthEl}-${dateEl}/${formatEl}-${genreEl}.json${key}`)
-  .then(data => data.json())
+  .then(data => {
+    if(data.ok) {
+      return data.json();
+    }
+    else {
+      throw new Error(`Oh no! We can't seem to find that best seller list.`);
+    }
+  })
   .then(response => {
     console.log(response);
     response.results.books.forEach(book => {
@@ -61,7 +67,25 @@ function fetchNytData() {
       bookCard.appendChild(bookCardInnerRight);
       container.append(bookCard);
     })
-  });
+  })
+  .catch((err) => {
+    let errorMessage = document.createElement('h3');
+    errorMessage.innerText = err;
+
+    let errorDiv = document.createElement('div');
+    errorDiv.classList.add('col-12');
+
+    let backLink = document.createElement('a');
+    backLink.classList.add('btn', 'btn-primary');
+    backLink.setAttribute('role', 'button');
+    backLink.setAttribute('href', './best-books.html');
+    backLink.style.margin = "40px 0 0 0";
+    backLink.innerText = `Please try again`;
+
+    errorDiv.appendChild(errorMessage);
+    errorDiv.appendChild(backLink);
+    container.appendChild(errorDiv);
+  })
 }
 
 function titleCase(str) {

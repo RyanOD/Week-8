@@ -39,9 +39,12 @@
                 id="year"
                 name="year" 
                 class="form-control" 
-                type="text" 
+                type="number"
+                max="2022"
+                min="2000"
                 pattern="\d{4}" 
-                placeholder="2019"
+                placeholder="2020"
+                value="2022"
               />
             </div>
           </div>
@@ -50,14 +53,20 @@
               <label for="month">Month</label>
             </div>
             <div class="col-8">
-              <input 
-                id="month" 
-                name="month" 
-                class="form-control" 
-                type="text" 
-                placeholder="03"
-                pattern="\d{2}"
-              />
+              <select name="month" id="month" class="form-control" placeholder="January">
+                <option value="01">January</option>
+                <option value="02">February</option>
+                <option value="03">March</option>
+                <option value="04">April</option>
+                <option value="05">May</option>
+                <option value="06">June</option>
+                <option value="07">July</option>
+                <option value="08">August</option>
+                <option value="09">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+              </select>
             </div>
           </div>
           <div class="row form-group mb-2">
@@ -69,9 +78,11 @@
                 id="date"
                 name="date" 
                 class="form-control" 
-                type="text" 
-                placeholder="11"
-                pattern="\d{2}"
+                type="number"
+                max="30"
+                min="1"
+                placeholder="1"
+                value="01"
               />
             </div>
           </div>
@@ -84,7 +95,6 @@
                 id="format"
                 name="format" 
                 class="form-control">
-                <option value="combined-print-and-e-book">Combined Print & E-Book</option>
                 <option value="hardcover">Hardcover</option>
                 <option value="paperback">Paperback</option>
               </select>
